@@ -47,9 +47,4 @@ class Program
     }
 }
 
-/*
- * This program exceeds the core requirements by:
- * - Preventing prompt repetition within the same day.
- * - Using a structured class model with separate files.
- * - Saving in a format that can be easily parsed.
- */
+
