@@ -1,55 +1,44 @@
-using System;
 using System.Collections.Generic;
+using System.Text;
 
 public class Order
 {
-    private List<Product> products;
-    private Customer customer;
+    private List<Product> _products = new List<Product>();
+    private Customer _customer;
 
-    // Constructor
     public Order(Customer customer)
     {
-        this.customer = customer;
-        this.products = new List<Product>();
+        _customer = customer;
     }
 
-    // Propiedad para agregar productos al pedido
     public void AddProduct(Product product)
     {
-        products.Add(product);
+        _products.Add(product);
     }
 
-    // Método para calcular el precio total del pedido
-    public double GetTotalPrice()
+    public double GetTotalCost()
     {
         double total = 0;
-
-        foreach (var product in products)
+        foreach (var product in _products)
         {
             total += product.GetTotalCost();
         }
-
-        // Agregar costo de envío basado en el país
-        double shippingCost = customer.LivesInUSA() ? 5.0 : 35.0;
-        total += shippingCost;
-
+        total += _customer.LivesInUSA() ? 5 : 35;
         return total;
     }
 
-    // Método para obtener la etiqueta de empaque
     public string GetPackingLabel()
     {
-        string label = "Packing Label:\n";
-        foreach (var product in products)
+        StringBuilder sb = new StringBuilder();
+        foreach (var product in _products)
         {
-            label += $"{product.Name} (ID: {product.ProductId})\n";
+            sb.AppendLine($"{product.GetName()} (ID: {product.GetProductId()})");
         }
-        return label;
+        return sb.ToString();
     }
 
-    // Método para obtener la etiqueta de envío
     public string GetShippingLabel()
     {
-        return $"Shipping Label:\n{customer.Name}\n{customer.CustomerAddress.GetFullAddress()}";
+        return $"{_customer.GetName()}\n{_customer.GetAddress().GetFullAddress()}";
     }
 }
